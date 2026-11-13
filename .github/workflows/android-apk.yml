@@ -14,12 +14,10 @@ jobs:
         with:
           distribution: temurin
           java-version: '17'
-      # GitHub ubuntu-latest fournit déjà le SDK Android.
-      # Ne pas utiliser setup-android@v3 qui tente d'installer le paquet obsolete "tools".
-      - name: Installer les composants Android requis
-        run: |
-          yes | sdkmanager --licenses >/dev/null || true
-          sdkmanager "platforms;android-35" "build-tools;35.0.0"
+      - name: Installer le SDK Android
+        uses: android-actions/setup-android@v3
+        with:
+          packages: 'platform-tools platforms;android-35 build-tools;35.0.0'
       - uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.9'
